@@ -13,7 +13,17 @@ ace:slug a rdf:Property ;
     rdfs:comment "A human-readable, descriptive URL slug for an item in the collection." ;
     rdfs:subPropertyOf dcterms:identifier .
 
-ace:alias a rdf:Property ;
+ace:slugAlias a rdf:Property ;
     rdfs:label "Slug Alias" ;
     rdfs:comment "An alias for the URL slug that should redirect to the canonical one." ;
+    rdfs:subPropertyOf dcterms:identifier .
+
+ace:filename a rdf:Property ;
+    rdfs:label "Filename" ;
+    rdfs:comment "The name of a file associated with an item in the collection. This is unique within the associated item and generally includes a file extension." ;
+    rdfs:subPropertyOf dcterms:identifier .
+
+ace:filenameAlias a rdf:Property ;
+    rdfs:label "Filename Alias" ;
+    rdfs:comment "An alias for the filename that should redirect to the canonical one." ;
     rdfs:subPropertyOf dcterms:identifier .
