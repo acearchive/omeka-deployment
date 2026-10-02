@@ -4,20 +4,15 @@
 
 ace:id a rdf:Property ;
     rdfs:label "ID" ;
-    rdfs:comment "A short, stable, unique identifier for an item in the collection." .
+    rdfs:comment "A short, stable, unique identifier for an item in the collection." ;
+    rdfs:subPropertyOf dcterms:identifier .
 
 ace:slug a rdf:Property ;
     rdfs:label "Slug" ;
-    rdfs:comment "A human-readable, descriptive URL slug for an item in the collection." .
+    rdfs:comment "A human-readable, descriptive URL slug for an item in the collection." ;
+    rdfs:subPropertyOf dcterms:identifier .
 
 ace:alias a rdf:Property ;
     rdfs:label "Slug Alias" ;
-    rdfs:comment "An alias for the URL slug that should redirect to the canonical one." .
-
-ace:identity a rdfs:Class ;
-    rdfs:label "Identity" ;
-    rdfs:comment "An identity label for a person." .
-
-ace:identity a rdf:Property ;
-    rdfs:label "Identity" ;
-    rdfs:comment "An identity label for a person." .
+    rdfs:comment "An alias for the URL slug that should redirect to the canonical one." ;
+    rdfs:subPropertyOf dcterms:identifier .
