@@ -1,3 +1,7 @@
 omeka.acearchive.lgbt {
     reverse_proxy 127.0.0.1:8080
 }
+
+connector.acearchive.lgbt {
+    reverse_proxy 127.0.0.1:8081
+}

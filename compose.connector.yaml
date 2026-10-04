@@ -1,0 +1,53 @@
+services:
+  web:
+    networks:
+      - frontend
+      - connector
+
+  connector:
+    image: ${CONNECTOR_IMAGE:?You must set CONNECTOR_IMAGE to use the Ace Archive overlay.}
+    ports:
+      - "127.0.0.1:${CONNECTOR_PORT:-8081}:80"
+    environment:
+      - PORT=80
+      - OMEKA_URL=http://web
+      - FILES_URL=${CONNECTOR_FILES_URL:-https://files.acearchive.lgbt}
+      - SCRATCH_DIR=/scratch
+    volumes:
+      # The image must create this directory, and it must be owned by the
+      # acting user.
+      - connector_scratch:/scratch:rw
+    networks:
+      - connector
+    depends_on:
+      web:
+        condition: service_healthy
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:mode=1777,size=64M
+    deploy:
+      resources:
+        limits:
+          cpus: "${CONNECTOR_CPU_LIMIT:-0.5}"
+          memory: ${CONNECTOR_MEMORY_LIMIT:-512M}
+        reservations:
+          cpus: "0.05"
+          memory: 32M
+    # TODO: add a healthcheck.
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  connector: {}
+
+volumes:
+  connector_scratch:
+    driver: local
