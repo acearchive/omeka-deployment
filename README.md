@@ -1,10 +1,18 @@
-# Omeka S Docker Template
+# Omeka S Deployment Template
 
-Ace Archive will eventually be migrating its backend to [Omeka
-S](https://omeka.org/s/). We deploy Omeka S using [this Docker
+Ace Archive uses a collection management system called [Omeka
+S](https://omeka.org/s/) on the backend. We deploy Omeka S using [this Docker
 template](https://github.com/AM-Digital-Research-Environment/omeka-s-docker),
-which is included here as a submodule. This repo additionally contains
-project-specific configuration overlays.
+which is included here as a submodule, pinned to the commit we have deployed.
+This repo additionally contains project-specific configuration overlays.
+
+## Omeka
+
+We use the [Homosaurus](https://homosaurus.org/) vocabulary via the [Value
+Suggest](https://omeka.org/s/docs/user-manual/modules/valuesuggest/) module.
+This module needs to be installed by following the instructions in
+[`./template/README.md`](/template/README.md). The Homosaurus v5 vocabulary is
+included with the module by default.
 
 ## Caddy
 
@@ -24,9 +32,25 @@ The Data Connector is a sidecar service which talks to the Omeka API. See the
 [acearchive/services](https://github.com/acearchive/services) repo for details.
 
 To deploy the Data Connector, you must overlay
-[`compose.connector.yaml`](./compose.connector.yaml) on top of the Omeka
+[`compose.acearchive.yaml`](./compose.connector.yaml) on top of the Omeka
 compose file via the `COMPOSE_FILE` env var, as described in
 [`./template/README.md`](/template/README.md).
 
-You'll additionally need to set the `CONNECTOR_IMAGE` env var to point to the
-Data Connector image in GHCR.
+You'll additionally need to set the `ACEARCHIVE_CONNECTOR_IMAGE` env var to
+point to the Data Connector image in GHCR.
+
+## Environment
+
+You'll need to set the following environment variables in the `.env` file in
+the docker template.
+
+```sh
+# Use a strong, random password. (e.g. `openssl rand -hex 24`)
+MYSQL_PASSWORD=
+OMEKA_TITLE="Ace Archive"
+NGINX_PORT=8080
+SERVER_NAME=omeka.acearchive.lgbt
+COMPOSE_FILE=docker-compose.yml:compose.immutable.yml:compose.acearchive.yml
+# In an actual deployment, always pin to a specific commit.
+ACEARCHIVE_CONNECTOR_IMAGE=ghcr.io/acearchive/omeka-connector:latest
+```

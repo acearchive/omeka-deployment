@@ -5,7 +5,7 @@ services:
       - connector
 
   connector:
-    image: ${CONNECTOR_IMAGE:?You must set CONNECTOR_IMAGE to use the Ace Archive overlay.}
+    image: ${ACEARCHIVE_CONNECTOR_IMAGE:?You must set ACEARCHIVE_CONNECTOR_IMAGE to use the Ace Archive overlay.}
     ports:
       - "127.0.0.1:${CONNECTOR_PORT:-8081}:80"
     environment:
