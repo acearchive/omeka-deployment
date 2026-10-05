@@ -32,7 +32,7 @@ The Data Connector is a sidecar service which talks to the Omeka API. See the
 [acearchive/services](https://github.com/acearchive/services) repo for details.
 
 To deploy the Data Connector, you must overlay
-[`compose.acearchive.yaml`](./compose.acearchive.yaml) on top of the Omeka
+[`compose.acearchive.yml`](./compose.acearchive.yml) on top of the Omeka
 compose file via the `COMPOSE_FILE` env var, as described in
 [`./template/README.md`](/template/README.md).
 
