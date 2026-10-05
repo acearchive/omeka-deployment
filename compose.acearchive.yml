@@ -7,11 +7,11 @@ services:
   connector:
     image: ${ACEARCHIVE_CONNECTOR_IMAGE:?You must set ACEARCHIVE_CONNECTOR_IMAGE to use the Ace Archive overlay.}
     ports:
-      - "127.0.0.1:${CONNECTOR_PORT:-8081}:80"
+      - "127.0.0.1:${ACEARCHIVE_CONNECTOR_PORT:-8081}:80"
     environment:
       - PORT=80
       - OMEKA_URL=http://web
-      - FILES_URL=${CONNECTOR_FILES_URL:-https://files.acearchive.lgbt}
+      - FILES_URL=${ACEARCHIVE_CONNECTOR_FILES_URL:-https://files.acearchive.lgbt}
       - SCRATCH_DIR=/scratch
     volumes:
       # The image must create this directory, and it must be owned by the
@@ -33,8 +33,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "${CONNECTOR_CPU_LIMIT:-0.5}"
-          memory: ${CONNECTOR_MEMORY_LIMIT:-512M}
+          cpus: "${ACEARCHIVE_CONNECTOR_CPU_LIMIT:-0.5}"
+          memory: ${ACEARCHIVE_CONNECTOR_MEMORY_LIMIT:-512M}
         reservations:
           cpus: "0.05"
           memory: 32M
