@@ -59,7 +59,7 @@ ACEARCHIVE_CONNECTOR_IMAGE=ghcr.io/acearchive/omeka-connector:latest
 
 Nightly backups are uploaded to a Cloudflare R2 bucket by a systemd timer.
 Bucket lifecycle rules automatically prune old backups, and bucket locks
-prevent backups from being overwritten ore deleted prematurely.
+prevent backups from being overwritten or deleted prematurely.
 
 The systemd timer pings [Healthchecks.io](https://healthchecks.io) on success.
 If a backup fails or doesn't run on a given day, that service notifies us.
