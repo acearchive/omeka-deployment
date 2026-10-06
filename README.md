@@ -50,7 +50,7 @@ MYSQL_PASSWORD=
 OMEKA_TITLE="Ace Archive"
 NGINX_PORT=8080
 SERVER_NAME=omeka.acearchive.lgbt
-COMPOSE_FILE=docker-compose.yml:compose.immutable.yml:compose.acearchive.yml
+COMPOSE_FILE=docker-compose.yml:compose.immutable.yml:../compose.acearchive.yml
 # In an actual deployment, always pin to a specific commit.
 ACEARCHIVE_CONNECTOR_IMAGE=ghcr.io/acearchive/omeka-connector:latest
 ```
