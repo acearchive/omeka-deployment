@@ -1,0 +1,13 @@
+[Unit]
+Description=Back up Omeka S to Cloudflare R2
+Wants=network-online.target
+After=network-online.target docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/omeka
+EnvironmentFile=/etc/omeka-backup.env
+TimeoutStartSec=2h
+ExecStartPre=-/usr/bin/curl -fsS -m 10 --retry 5 -o /dev/null ${HEALTHCHECK_PING_URL}/start
+ExecStart=/usr/bin/env nu /root/omeka/omeka-backup.nu
+ExecStartPost=-/usr/bin/curl -fsS -m 10 --retry 5 -o /dev/null ${HEALTHCHECK_PING_URL}

@@ -54,3 +54,41 @@ COMPOSE_FILE=docker-compose.yml:compose.immutable.yml:../compose.acearchive.yml
 # In an actual deployment, always pin to a specific commit.
 ACEARCHIVE_CONNECTOR_IMAGE=ghcr.io/acearchive/omeka-connector:latest
 ```
+
+## Backups
+
+Nightly backups are uploaded to a Cloudflare R2 bucket by a systemd timer.
+Bucket lifecycle rules automatically prune old backups, and bucket locks
+prevent backups from being overwritten ore deleted prematurely.
+
+The systemd timer pings [Healthchecks.io](https://healthchecks.io) on success.
+If a backup fails or doesn't run on a given day, that service notifies us.
+
+To set up backups, the server must have the following tools installed:
+
+- [Nushell](https://www.nushell.sh/)
+- [rclone](https://rclone.org/)
+- `curl`
+
+Then you must create `/etc/omeka-backup.env` with mode `0600` to store env vars
+for the systemd timer and backup script.
+
+```sh
+BACKUP_BUCKET=
+HEALTHCHECK_PING_URL=
+RCLONE_CONFIG_R2_TYPE=s3
+RCLONE_CONFIG_R2_PROVIDER=Cloudflare
+RCLONE_CONFIG_R2_ENDPOINT=
+RCLONE_CONFIG_R2_ACCESS_KEY_ID=
+RCLONE_CONFIG_R2_SECRET_ACCESS_KEY=
+RCLONE_CONFIG_R2_NO_CHECK_BUCKET=true
+```
+
+Then install and start the systemd timer. The timer expects this repo to be
+cloned to `/root/omeka`.
+
+```sh
+cp ./omeka-backup.service ./omeka-backup.timer /etc/systemd/system/
+systemctl daemon-reload
+systemctl enable --now omeka-backup.timer
+```
