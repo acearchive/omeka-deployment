@@ -16,7 +16,7 @@ services:
     volumes:
       # The image must create this directory, and it must be owned by the
       # acting user.
-      - connector_scratch:/scratch:rw
+      - connector-scratch:/scratch:rw
     networks:
       - connector
     depends_on:
@@ -38,7 +38,12 @@ services:
         reservations:
           cpus: "0.05"
           memory: 32M
-    # TODO: add a healthcheck.
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
     logging:
       driver: "json-file"
       options:
@@ -49,5 +54,5 @@ networks:
   connector: {}
 
 volumes:
-  connector_scratch:
+  connector-scratch:
     driver: local
