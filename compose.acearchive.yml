@@ -11,6 +11,7 @@ services:
     environment:
       - PORT=80
       - OMEKA_URL=http://web
+      - BASE_DOMAIN=${ACEARCHIVE_CONNECTOR_BASE_DOMAIN:-acearchive.lgbt}
       - FILES_URL=${ACEARCHIVE_CONNECTOR_FILES_URL:-https://files.acearchive.lgbt}
       - SCRATCH_DIR=/scratch
     volumes:
