@@ -17,7 +17,8 @@ included with the module by default.
 ## Caddy
 
 This deployment uses a Caddy reverse proxy for TLS termination. You'll need to
-install its [`Caddyfile`](./Caddyfile) when you set up the Omeka server.
+install Caddy and its [`Caddyfile`](./Caddyfile) when you set up the Omeka
+server.
 
 ## Custom vocabulary
 
@@ -39,7 +40,7 @@ compose file via the `COMPOSE_FILE` env var, as described in
 You'll additionally need to set the `ACEARCHIVE_CONNECTOR_IMAGE` env var to
 point to the Data Connector image in GHCR.
 
-## Environment
+## Configuration
 
 You'll need to set the following environment variables in the `.env` file in
 the docker template.
@@ -47,8 +48,10 @@ the docker template.
 ```sh
 # Use a strong, random password. (e.g. `openssl rand -hex 24`)
 MYSQL_PASSWORD=
-OMEKA_TITLE="Ace Archive"
 NGINX_PORT=8080
+OMEKA_TZ=America/New_York
+OMEKA_LOCALE=en_US
+OMEKA_TITLE="Ace Archive"
 SERVER_NAME=omeka.acearchive.lgbt
 COMPOSE_FILE=docker-compose.yml:compose.immutable.yml:../compose.acearchive.yml
 # In an actual deployment, always pin to a specific commit.
@@ -66,9 +69,9 @@ If a backup fails or doesn't run on a given day, that service notifies us.
 
 To set up backups, the server must have the following tools installed:
 
-- [Nushell](https://www.nushell.sh/)
-- [rclone](https://rclone.org/)
 - `curl`
+- [Nushell](https://www.nushell.sh/book/installation.html)
+- [rclone](https://rclone.org/install/)
 
 Then you must create `/etc/omeka-backup.env` with mode `0600` to store env vars
 for the systemd timer and backup script.
