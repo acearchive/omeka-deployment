@@ -40,24 +40,6 @@ compose file via the `COMPOSE_FILE` env var, as described in
 You'll additionally need to set the `ACEARCHIVE_CONNECTOR_IMAGE` env var to
 point to the Data Connector image in GHCR.
 
-## Configuration
-
-You'll need to set the following environment variables in the `.env` file in
-the docker template.
-
-```sh
-# Use a strong, random password. (e.g. `openssl rand -hex 24`)
-MYSQL_PASSWORD=
-NGINX_PORT=8080
-OMEKA_TZ=America/New_York
-OMEKA_LOCALE=en_US
-OMEKA_TITLE="Ace Archive"
-SERVER_NAME=omeka.acearchive.lgbt
-COMPOSE_FILE=docker-compose.yml:compose.immutable.yml:../compose.acearchive.yml
-# In an actual deployment, always pin to a specific commit.
-ACEARCHIVE_CONNECTOR_IMAGE=ghcr.io/acearchive/omeka-connector:latest
-```
-
 ## Backups
 
 Nightly backups are uploaded to a Cloudflare R2 bucket by a systemd timer.
@@ -94,4 +76,38 @@ cloned to `/root/omeka`.
 cp ./omeka-backup.service ./omeka-backup.timer /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable --now omeka-backup.timer
+```
+
+## Analytics
+
+We collect privacy-preserving analytics via a self-hosted instance of
+[Umami](https://umami.is/), hosted at <https://umami.acearchive.lgbt>.
+
+To deploy Umami, you must overlay [`compose.umami.yml`](./compose.umami.yml) on
+top of the Omeka compose file via the `COMPOSE_FILE` env var, as described in
+[`./template/README.md`](/template/README.md).
+
+You'll additionally need to set the `UMAMI_APP_SECRET` and
+`UMAMI_TWO_FACTOR_ENCRYPTION_KEY` env vars.
+
+## Configuration
+
+To deploy Omeka, the Omeka Data Connector, and Umami, you'll need to set the
+following environment variables in the `.env` file in the docker template.
+
+```sh
+# Use a strong, random secret. (e.g. `openssl rand -hex 32`)
+MYSQL_PASSWORD=
+NGINX_PORT=8080
+OMEKA_TZ=America/New_York
+OMEKA_LOCALE=en_US
+OMEKA_TITLE="Ace Archive"
+SERVER_NAME=omeka.acearchive.lgbt
+COMPOSE_FILE=docker-compose.yml:compose.immutable.yml:../compose.acearchive.yml:../compose.umami.yml
+# In an actual deployment, always pin to a specific commit.
+ACEARCHIVE_CONNECTOR_IMAGE=ghcr.io/acearchive/omeka-connector:latest
+# Use a strong, random secret. (e.g. `openssl rand -hex 32`)
+UMAMI_APP_SECRET=
+# Use a strong, random secret. (e.g. `openssl rand -hex 32`)
+UMAMI_TWO_FACTOR_ENCRYPTION_KEY=
 ```
