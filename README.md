@@ -90,6 +90,9 @@ top of the Omeka compose file via the `COMPOSE_FILE` env var, as described in
 You'll additionally need to set the `UMAMI_APP_SECRET` and
 `UMAMI_TWO_FACTOR_ENCRYPTION_KEY` env vars.
 
+Umami is a standalone services that doesn't actually need to be overlaid on top
+of the Omeka S compose file, but overlaying them simplifies deployment.
+
 ## Configuration
 
 To deploy Omeka, the Omeka Data Connector, and Umami, you'll need to set the
