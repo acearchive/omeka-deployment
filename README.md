@@ -59,7 +59,7 @@ Then you must create `/etc/omeka-backup.env` with mode `0600` to store env vars
 for the systemd timer and backup script.
 
 ```sh
-BACKUP_BUCKET=
+BACKUP_BUCKET=acearchive-omeka-backups
 HEALTHCHECK_PING_URL=
 RCLONE_CONFIG_R2_TYPE=s3
 RCLONE_CONFIG_R2_PROVIDER=Cloudflare
@@ -109,6 +109,13 @@ SERVER_NAME=omeka.acearchive.lgbt
 COMPOSE_FILE=docker-compose.yml:compose.immutable.yml:../compose.acearchive.yml:../compose.umami.yml
 # In an actual deployment, always pin to a specific commit.
 ACEARCHIVE_CONNECTOR_IMAGE=ghcr.io/acearchive/omeka-connector:latest
+# Leave the cron spec unset to disable data exports. Times are in UTC.
+ACEARCHIVE_CONNECTOR_DATA_EXPORT_CRON_SPEC="0 4 * * *"
+ACEARCHIVE_CONNECTOR_DATA_EXPORT_BUCKET=acearchive-data-exports
+ACEARCHIVE_CONNECTOR_DATA_EXPORT_S3_ENDPOINT=
+ACEARCHIVE_CONNECTOR_DATA_EXPORT_S3_ACCESS_KEY_ID=
+ACEARCHIVE_CONNECTOR_DATA_EXPORT_S3_SECRET_ACCESS_KEY=
+ACEARCHIVE_CONNECTOR_DATA_EXPORT_HEALTHCHECK_PING_URL=
 # Use a strong, random secret. (e.g. `openssl rand -hex 32`)
 UMAMI_APP_SECRET=
 # Use a strong, random secret. (e.g. `openssl rand -hex 32`)
