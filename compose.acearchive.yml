@@ -15,6 +15,7 @@ services:
       - FILES_URL=${ACEARCHIVE_CONNECTOR_FILES_URL:-https://files.acearchive.lgbt}
       - SCRATCH_DIR=/scratch
       - MEDIA_CACHE_TTL_SECS=${ACEARCHIVE_CONNECTOR_MEDIA_CACHE_TTL_SECS:-300}
+      - MODEL_CACHE_TTL_SECS=${ACEARCHIVE_CONNECTOR_MODEL_CACHE_TTL_SECS:-300}
     volumes:
       # The image must create this directory, and it must be owned by the
       # acting user.
