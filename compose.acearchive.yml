@@ -24,6 +24,9 @@ services:
       - DATA_EXPORT_S3_ACCESS_KEY_ID=${ACEARCHIVE_CONNECTOR_DATA_EXPORT_S3_ACCESS_KEY_ID:-}
       - DATA_EXPORT_S3_SECRET_ACCESS_KEY=${ACEARCHIVE_CONNECTOR_DATA_EXPORT_S3_SECRET_ACCESS_KEY:-}
       - DATA_EXPORT_HEALTHCHECK_PING_URL=${ACEARCHIVE_CONNECTOR_DATA_EXPORT_HEALTHCHECK_PING_URL:-}
+      # Heartbeat uptime checks are disabled unless a cron spec is set.
+      - HEARTBEAT_CRON_SPEC=${ACEARCHIVE_CONNECTOR_HEARTBEAT_CRON_SPEC:-}
+      - HEARTBEAT_PING_URL=${ACEARCHIVE_CONNECTOR_HEARTBEAT_PING_URL:-}
     volumes:
       # The image must create this directory, and it must be owned by the
       # acting user.
