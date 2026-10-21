@@ -1,0 +1,8 @@
+# On 21 Oct 2026, a major security patch was released for PHP, addressing
+# CVE-2026-109618 and CVE-2026-109619. Rather than wait for the pinned PHP
+# image be bumped upstream, we're overriding the PHP image here.
+services:
+  php:
+    build:
+      additional_contexts:
+        "php:8.5.10-fpm-trixie@sha256:70076c1cae0cd0ba6761832417e3a1df3e5560f0544eb0fe40357373e54420fe": "docker-image://php:8.5.12-fpm-trixie@sha256:eb37f58646a901dc7727cf448cae36daaefaba79de33b5058dab79aa4c04aefb"
